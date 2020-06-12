@@ -5,4 +5,5 @@ class User < ApplicationRecord
   validates_uniqueness_of :name
 
   has_many :proposals, dependent: :destroy
+  has_many :comments, dependent: :destroy
 end
