@@ -20,6 +20,19 @@ class CommentsController < ApplicationController
     end
   end
 
+  def index
+    proposal = Proposal.find(params[:proposal_id])
+
+    if proposal
+      render json: {
+          status: :found,
+          comments: proposal.comments
+      }
+    else
+      render json: { status: 404 }
+    end
+  end
+
   def show
     comment = Comment.find(params[:comment_id])
 

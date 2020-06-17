@@ -20,6 +20,19 @@ class VotesController < ApplicationController
     end
   end
 
+  def index
+    proposal = Proposal.find(params[:proposal_id])
+
+    if proposal
+      render json: {
+          status: :found,
+          votes: proposal.votes
+      }
+    else
+      render json: { status: 404 }
+    end
+  end
+
   def show
     vote = Vote.find(params[:vote_id])
 
