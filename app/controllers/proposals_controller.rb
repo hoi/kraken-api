@@ -14,6 +14,19 @@ class ProposalsController < ApplicationController
     end
   end
 
+  def index
+    proposals = Proposal.all
+
+    if proposals
+      render json: {
+          status: :found,
+          proposals: proposals
+      }
+    else
+      render json: { status: 404 }
+    end
+  end
+
   def show
     proposal = Proposal.find(params[:proposal_id])
 

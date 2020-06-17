@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   delete 'proposals/:proposal_id/comments/:comment_id', to: 'comments#delete'
 
   post 'proposals', to: 'proposals#create'
+  get 'proposals', to: 'proposals#index'
   get 'proposals/:proposal_id', to: 'proposals#show'
   put 'proposals/:proposal_id', to: 'proposals#edit'
   delete 'proposals/:proposal_id', to: 'proposals#delete'
