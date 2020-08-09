@@ -48,8 +48,7 @@ class CommentsController < ApplicationController
 
   def edit
     comment = Comment.find(params[:comment_id])
-    comment.title = params['comment']['title']
-    comment.title = params['comment']['body']
+    comment.body = params['comment']['body']
     comment.save!
 
     if comment

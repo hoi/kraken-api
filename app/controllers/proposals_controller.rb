@@ -43,7 +43,7 @@ class ProposalsController < ApplicationController
   def edit
     proposal = Proposal.find(params[:proposal_id])
     proposal.title = params['proposal']['title']
-    proposal.title = params['proposal']['body']
+    proposal.body = params['proposal']['body']
     proposal.save!
 
     if proposal
