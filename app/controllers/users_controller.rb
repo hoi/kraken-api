@@ -15,4 +15,17 @@ class UsersController < ApplicationController
       render json: { status: 500 }
     end
   end
+
+  def index
+    users = User.all
+
+    if users
+      render json: {
+          status: :found,
+          users: users
+      }
+    else
+      render json: { status: 404 }
+    end
+  end
 end
