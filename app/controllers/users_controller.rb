@@ -22,7 +22,10 @@ class UsersController < ApplicationController
     if users
       render json: {
           status: :found,
-          users: users
+          users: users.map{|user| {
+              id: user.id,
+              name: user.name
+          }}
       }
     else
       render json: { status: 404 }
