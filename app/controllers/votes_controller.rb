@@ -48,8 +48,7 @@ class VotesController < ApplicationController
 
   def edit
     vote = Vote.find(params[:vote_id])
-    vote.title = params['vote']['title']
-    vote.title = params['vote']['body']
+    vote.value = params['vote']['value']
     vote.save!
 
     if vote
