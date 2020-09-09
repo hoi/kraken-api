@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :proposals, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :delegations, dependent: :destroy
 end
