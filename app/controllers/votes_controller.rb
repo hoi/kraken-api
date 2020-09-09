@@ -7,8 +7,17 @@ class VotesController < ApplicationController
     end
 
     vote = Vote.create!(value: params['vote']['value'],
-                              proposal: proposal,
-                              user: @current_user)
+                        proposal: proposal,
+                        user: @current_user,
+                        is_self: true)
+
+    @current_user.delegations.each do |delegation|
+      delegate_vote = Vote.find_or_create_by(user_id: delegation.delegate,
+                                   proposal: proposal,
+                                   is_self: false)
+      delegate_vote.value = params['vote']['value']
+      delegate_vote.save!
+    end
 
     if vote
       render json: {
@@ -51,6 +60,14 @@ class VotesController < ApplicationController
     vote.value = params['vote']['value']
     vote.save!
 
+    @current_user.delegations.each do |delegation|
+      delegate_vote = Vote.find_or_create_by(user_id: delegation.delegate,
+                                             proposal: proposal,
+                                             is_self: false)
+      delegate_vote.value = params['vote']['value']
+      delegate_vote.save!
+    end
+
     if vote
       render json: {
           status: :updated,
@@ -64,6 +81,13 @@ class VotesController < ApplicationController
   def delete
     vote = Vote.find(params[:vote_id])
     vote.destroy!
+
+    @current_user.delegations.each do |delegation|
+      delegate_vote = Vote.find_by(user_id: delegation.delegate,
+                                   proposal: proposal,
+                                   is_self: false)
+      delegate_vote.destroy!
+    end
 
     render json: {
         status: :deleted
