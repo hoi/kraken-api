@@ -1,12 +1,12 @@
 class DelegationsController < ApplicationController
   def create
-    delegate = User.find(params[:delagate_id])
+    delegate = User.find(params['delegation']['delegate_id'])
 
     if delegate.nil?
       render json: { status: 404 } and return
     end
 
-    delegation = Delegation.create!(delegate: params[:delagate_id],
+    delegation = Delegation.create!(delegate: params['delegation']['delegate_id'],
                               user: @current_user)
 
     if delegation
