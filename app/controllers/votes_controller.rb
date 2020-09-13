@@ -6,17 +6,26 @@ class VotesController < ApplicationController
       render json: { status: 404 } and return
     end
 
-    vote = Vote.create!(value: params['vote']['value'],
-                        proposal: proposal,
-                        user: @current_user,
-                        is_self: true)
+    vote = @current_user.votes.find_by(proposal: proposal)
+    if vote.nil?
+      vote = Vote.create!(value: params['vote']['value'],
+                          proposal: proposal,
+                          user: @current_user,
+                          is_self: true)
+    else
+      vote.value = params['vote']['value']
+      vote.is_self = true
+      vote.save!
+    end
 
-    @current_user.delegations.each do |delegation|
-      delegate_vote = Vote.find_or_create_by(user_id: delegation.delegate,
-                                   proposal: proposal,
-                                   is_self: false)
-      delegate_vote.value = params['vote']['value']
-      delegate_vote.save!
+    Delegation.where(delegate: @current_user.id).each do |delegation|
+      delegate_vote = Vote.find_by(user_id: delegation.user_id, proposal: proposal)
+      if delegate_vote.nil?
+        Vote.create!(user: delegation.user, proposal: proposal, value: params['vote']['value'], is_self: false)
+      elsif !delegate_vote.is_self
+        delegate_vote.value = params['vote']['value']
+        delegate_vote.save!
+      end
     end
 
     if vote
@@ -60,12 +69,14 @@ class VotesController < ApplicationController
     vote.value = params['vote']['value']
     vote.save!
 
-    @current_user.delegations.each do |delegation|
-      delegate_vote = Vote.find_or_create_by(user_id: delegation.delegate,
-                                             proposal: proposal,
-                                             is_self: false)
-      delegate_vote.value = params['vote']['value']
-      delegate_vote.save!
+    Delegation.where(delegate: @current_user.id).each do |delegation|
+      delegate_vote = Vote.find_by(user_id: delegation.user_id, proposal: proposal)
+      if delegate_vote.nil?
+        Vote.create!(user: delegation.user, proposal: proposal, value: params['vote']['value'], is_self: false)
+      elsif !delegate_vote.is_self
+        delegate_vote.value = params['vote']['value']
+        delegate_vote.save!
+      end
     end
 
     if vote
@@ -82,7 +93,7 @@ class VotesController < ApplicationController
     vote = Vote.find(params[:vote_id])
     vote.destroy!
 
-    @current_user.delegations.each do |delegation|
+    Delegation.where(delegate: @current_user.id).each do |delegation|
       delegate_vote = Vote.find_by(user_id: delegation.delegate,
                                    proposal: proposal,
                                    is_self: false)
