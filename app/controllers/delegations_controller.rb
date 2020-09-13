@@ -1,5 +1,6 @@
 class DelegationsController < ApplicationController
   def create
+    @current_user.delegations.destroy_all
     delegate = User.find(params['delegation']['delegate_id'])
 
     if delegate.nil?
@@ -19,16 +20,8 @@ class DelegationsController < ApplicationController
     end
   end
 
-  def index
-    render json: {
-        status: :found,
-        delegations: @current_user.delegations
-    }
-  end
-
   def delete
-    delegation = @current_user.delegations.where(delegate: params[:delagate_id]).first
-    delegation.destroy!
+    @current_user.delegations.destroy_all
 
     render json: {
         status: :deleted
