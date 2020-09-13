@@ -6,8 +6,8 @@ class DelegationsController < ApplicationController
       render json: { status: 404 } and return
     end
 
-    delegation = Delegation.create!(delegate: params['delegation']['delegate_id'],
-                              user: @current_user)
+    delegation = Delegation.create_or_find_by!(delegate: params['delegation']['delegate_id'],
+                                               user: @current_user)
 
     if delegation
       render json: {
