@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   delete 'proposals/:proposal_id', to: 'proposals#delete'
 
   post 'delegations', to: 'delegations#create'
+  get 'delegations', to: 'delegations#show'
   delete 'delegations', to: 'delegations#delete'
 
   post 'authenticate', to: 'authentication#authenticate'

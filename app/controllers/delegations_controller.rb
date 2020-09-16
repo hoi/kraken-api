@@ -20,6 +20,19 @@ class DelegationsController < ApplicationController
     end
   end
 
+  def show
+    delegation = @current_user.delegations.first
+
+    if delegation
+      render json: {
+          status: :found,
+          delegation: delegation
+      }
+    else
+      render json: { status: 404 }
+    end
+  end
+
   def delete
     @current_user.delegations.destroy_all
 
