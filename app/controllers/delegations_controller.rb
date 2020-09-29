@@ -6,7 +6,7 @@ class DelegationsController < ApplicationController
     end
 
     @current_user.delegations.destroy_all
-    
+
     delegate = User.find(params['delegation']['delegate_id'])
 
     if delegate.nil?
