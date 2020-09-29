@@ -1,5 +1,6 @@
 class AddIsSelfToVotes < ActiveRecord::Migration[6.0]
   def change
-    add_column :votes, :is_self, :boolean
+    remove_column :votes, :is_self
+    add_column :votes, :voter_id, :integer
   end
 end

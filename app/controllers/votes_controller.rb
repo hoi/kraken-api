@@ -11,19 +11,20 @@ class VotesController < ApplicationController
       vote = Vote.create!(value: params['vote']['value'],
                           proposal: proposal,
                           user: @current_user,
-                          is_self: true)
+                          voter_id: @current_user.id)
     else
       vote.value = params['vote']['value']
-      vote.is_self = true
+      vote.voter_id = @current_user.id
       vote.save!
     end
 
     Delegation.where(delegate: @current_user.id).each do |delegation|
       delegate_vote = Vote.find_by(user_id: delegation.user_id, proposal: proposal)
       if delegate_vote.nil?
-        Vote.create!(user: delegation.user, proposal: proposal, value: params['vote']['value'], is_self: false)
-      elsif !delegate_vote.is_self
+        Vote.create!(user: delegation.user, proposal: proposal, value: params['vote']['value'], voter_id: @current_user.id)
+      elsif voter_id != delegation.user_id
         delegate_vote.value = params['vote']['value']
+        delegate_vote.voter_id = @current_user.id
         delegate_vote.save!
       end
     end
@@ -80,14 +81,16 @@ class VotesController < ApplicationController
   def edit
     vote = Vote.find(params[:vote_id])
     vote.value = params['vote']['value']
+    vote.voter_id = @current_user.id
     vote.save!
 
     Delegation.where(delegate: @current_user.id).each do |delegation|
       delegate_vote = Vote.find_by(user_id: delegation.user_id, proposal: proposal)
       if delegate_vote.nil?
-        Vote.create!(user: delegation.user, proposal: proposal, value: params['vote']['value'], is_self: false)
-      elsif !delegate_vote.is_self
+        Vote.create!(user: delegation.user, proposal: proposal, value: params['vote']['value'], voter_id: @current_user.id)
+      elsif voter_id != delegation.user_id
         delegate_vote.value = params['vote']['value']
+        delegate_vote.voter_id = @current_user.id
         delegate_vote.save!
       end
     end
@@ -103,15 +106,17 @@ class VotesController < ApplicationController
   end
 
   def delete
+    proposal = Proposal.find(params[:proposal_id])
+
+    if proposal.nil?
+      render json: { status: 404 } and return
+    end
+
     vote = Vote.find(params[:vote_id])
     vote.destroy!
 
-    Delegation.where(delegate: @current_user.id).each do |delegation|
-      delegate_vote = Vote.find_by(user_id: delegation.delegate,
-                                   proposal: proposal,
-                                   is_self: false)
-      delegate_vote.destroy!
-    end
+    delegate_votes = Vote.where(proposal: proposal, voter_id: @current_user.id)
+    delegate_votes.destroy_all
 
     render json: {
         status: :deleted
