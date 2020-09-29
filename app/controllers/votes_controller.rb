@@ -64,6 +64,19 @@ class VotesController < ApplicationController
     end
   end
 
+  def mine
+    vote = @current_user.votes.where(proposal_id: params[:proposal_id]).first
+
+    if vote
+      render json: {
+          status: :found,
+          vote: vote
+      }
+    else
+      render json: { status: 404 }
+    end
+  end
+
   def edit
     vote = Vote.find(params[:vote_id])
     vote.value = params['vote']['value']

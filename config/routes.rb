@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   post 'proposals/:proposal_id/votes', to: 'votes#create'
   get 'proposals/:proposal_id/votes', to: 'votes#index'
+  get 'proposals/:proposal_id/votes/mine', to: 'votes#mine'
   get 'proposals/:proposal_id/votes/:vote_id', to: 'votes#show'
   put 'proposals/:proposal_id/votes/:vote_id', to: 'votes#edit'
   delete 'proposals/:proposal_id/votes/:vote_id', to: 'votes#delete'
