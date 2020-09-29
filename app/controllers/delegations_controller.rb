@@ -1,6 +1,12 @@
 class DelegationsController < ApplicationController
   def create
+    @current_user.delegations.each do |delegation|
+      delegate_votes = Vote.where(user_id: @current_user.id, voter_id: delegation.delegate)
+      delegate_votes.destroy_all
+    end
+
     @current_user.delegations.destroy_all
+    
     delegate = User.find(params['delegation']['delegate_id'])
 
     if delegate.nil?
@@ -34,6 +40,11 @@ class DelegationsController < ApplicationController
   end
 
   def delete
+    @current_user.delegations.each do |delegation|
+      delegate_votes = Vote.where(user_id: @current_user.id, voter_id: delegation.delegate)
+      delegate_votes.destroy_all
+    end
+
     @current_user.delegations.destroy_all
 
     render json: {
