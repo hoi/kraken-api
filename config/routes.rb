@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   get 'teams', to: 'teams#index'
   get 'teams/:team_id', to: 'teams#show'
   put 'teams/:team_id', to: 'teams#edit'
-  put 'teams/:team_id/users', to: 'teams#members'
+  get 'teams/:team_id/users', to: 'teams#members'
   put 'teams/:team_id/users/:user_id/add', to: 'teams#add'
   put 'teams/:team_id/users/:user_id/remove', to: 'teams#remove'
   delete 'teams/:team_id', to: 'teams#delete'

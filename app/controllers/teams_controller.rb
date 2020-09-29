@@ -5,7 +5,8 @@ class TeamsController < ApplicationController
     if team
       render json: {
           status: :created,
-          team: team
+          team: team,
+          members: []
       }
     else
       render json: { status: 500 }
@@ -28,10 +29,13 @@ class TeamsController < ApplicationController
   def show
     team = Team.find(params[:team_id])
 
+    team_users = TeamUser.where(team: team)
+
     if team
       render json: {
           status: :found,
-          team: team
+          team: team,
+          members: team_users
       }
     else
       render json: { status: 404 }
@@ -43,10 +47,13 @@ class TeamsController < ApplicationController
     team.name = params['team']['name']
     team.save!
 
+    team_users = TeamUser.where(team: team)
+
     if team
       render json: {
           status: :updated,
-          team: team
+          team: team,
+          members: team_users
       }
     else
       render json: { status: 500 }
@@ -65,7 +72,7 @@ class TeamsController < ApplicationController
     render json: {
         status: :found,
         team: team,
-        team_users: team_users
+        members: team_users
     }
   end
 
@@ -83,7 +90,7 @@ class TeamsController < ApplicationController
     render json: {
         status: :found,
         team: team,
-        team_users: team_users
+        members: team_users
     }
   end
 
@@ -105,13 +112,16 @@ class TeamsController < ApplicationController
     render json: {
         status: :found,
         team: team,
-        team_users: team_users
+        members: team_users
     }
   end
 
   def delete
     team = Team.find(params[:team_id])
     team.destroy!
+
+    team_users = TeamUser.where(team_id: params[:team_id])
+    team_users.delete_all
 
     render json: {
         status: :deleted
