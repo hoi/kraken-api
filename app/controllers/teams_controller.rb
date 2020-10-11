@@ -1,6 +1,8 @@
 class TeamsController < ApplicationController
   def create
-    team = Team.create!(name: params['team']['name'])
+    team = Team.create!(name: params['team']['name'],
+                        description: params['team']['description'],
+                        thumbnail: params['team']['thumbnail'])
 
     if team
       render json: {
@@ -45,6 +47,8 @@ class TeamsController < ApplicationController
   def edit
     team = Team.find(params[:team_id])
     team.name = params['team']['name']
+    team.description = params['team']['description']
+    team.thumbnail = params['thumbnail']['thumbnail']
     team.save!
 
     team_users = TeamUser.where(team: team)
