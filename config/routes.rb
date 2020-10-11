@@ -23,6 +23,12 @@ Rails.application.routes.draw do
   put 'proposals/:proposal_id', to: 'proposals#edit'
   delete 'proposals/:proposal_id', to: 'proposals#delete'
 
+  post 'teams/:team_id/actions', to: 'team_actions#create'
+  get 'teams/:team_id/actions', to: 'team_actions#index'
+  get 'teams/:team_id/actions/:action_id', to: 'team_actions#show'
+  put 'teams/:team_id/actions/:action_id', to: 'team_actions#edit'
+  delete 'teams/:team_id/actions/:action_id', to: 'team_actions#delete'
+
   get 'teams/:team_id/users', to: 'team_users#list'
   put 'teams/:team_id/users/:user_id/add', to: 'team_users#add'
   put 'teams/:team_id/users/:user_id/remove', to: 'team_users#remove'

@@ -8,7 +8,8 @@ class TeamsController < ApplicationController
       render json: {
           status: :created,
           team: team,
-          members: []
+          members: [],
+          actions: []
       }
     else
       render json: { status: 500 }
@@ -38,7 +39,9 @@ class TeamsController < ApplicationController
           status: :found,
           team: team,
           members: team_users,
-          members_count: team_users.count
+          members_count: team_users.count,
+          actions: team.team_actions,
+          actions_count: team.team_actions.count
       }
     else
       render json: { status: 404 }
@@ -59,7 +62,9 @@ class TeamsController < ApplicationController
           status: :updated,
           team: team,
           members: team_users,
-          members_count: team_users.count
+          members_count: team_users.count,
+          actions: team.team_actions,
+          actions_count: team.team_actions.count
       }
     else
       render json: { status: 500 }

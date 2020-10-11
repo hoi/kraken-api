@@ -12,7 +12,9 @@ class TeamUsersController < ApplicationController
         status: :found,
         team: team,
         members: team_users,
-        members_count: team_users.count
+        members_count: team_users.count,
+        actions: team.team_actions,
+        actions_count: team.team_actions.count
     }
   end
 
@@ -31,7 +33,9 @@ class TeamUsersController < ApplicationController
         status: :found,
         team: team,
         members: team_users,
-        members_count: team_users.count
+        members_count: team_users.count,
+        actions: team.team_actions,
+        actions_count: team.team_actions.count
     }
   end
 
@@ -54,7 +58,9 @@ class TeamUsersController < ApplicationController
         status: :found,
         team: team,
         members: team_users,
-        members_count: team_users.count
+        members_count: team_users.count,
+        actions: team.team_actions,
+        actions_count: team.team_actions.count
     }
   end
 end
