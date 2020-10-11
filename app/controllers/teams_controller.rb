@@ -37,7 +37,8 @@ class TeamsController < ApplicationController
       render json: {
           status: :found,
           team: team,
-          members: team_users
+          members: team_users,
+          members_count: team_users.count
       }
     else
       render json: { status: 404 }
