@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   put 'proposals/:proposal_id/comments/:comment_id', to: 'comments#edit'
   delete 'proposals/:proposal_id/comments/:comment_id', to: 'comments#delete'
 
+  post 'proposals/:proposal_id/amendments', to: 'proposal_amendments#create'
+  get 'proposals/:proposal_id/amendments', to: 'proposal_amendments#index'
+  get 'proposals/:proposal_id/amendments/:amendment_id', to: 'proposal_amendments#show'
+  put 'proposals/:proposal_id/amendments/:amendment_id', to: 'proposal_amendments#edit'
+
   post 'proposals', to: 'proposals#create'
   get 'proposals', to: 'proposals#index'
   get 'proposals/:proposal_id', to: 'proposals#show'
