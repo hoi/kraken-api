@@ -30,14 +30,24 @@ class ProposalsController < ApplicationController
   def show
     proposal = Proposal.find(params[:proposal_id])
 
-    if proposal
-      render json: {
-          status: :found,
-          proposal: proposal
-      }
-    else
-      render json: { status: 404 }
+    unless proposal
+      render json: { status: 404 } and return
     end
+
+    proposal_details = {
+        title: proposal.title,
+        body: proposal.body,
+        user: proposal.user,
+        deadline: proposal.deadline,
+        vote_count: proposal.votes.count,
+        comments_count: proposal.comments.count,
+        amendments_count: proposal.proposal_amendments.count
+    }
+
+    render json: {
+        status: :found,
+        proposal: proposal_details
+    }
   end
 
   def edit
