@@ -6,8 +6,8 @@ class ProposalAmendmentsController < ApplicationController
       render json: { status: 404 } and return
     end
 
-    proposal_amendment = ProposalAmendment.create!(text: params['proposal_amendment']['text'],
-                                                   status: params['proposal_amendment']['status'],
+    proposal_amendment = ProposalAmendment.create!(text: params['amendment']['text'],
+                                                   status: params['amendment']['status'],
                                                    proposal: proposal,
                                                    user: @current_user)
 
@@ -49,8 +49,8 @@ class ProposalAmendmentsController < ApplicationController
 
   def edit
     proposal_amendment = ProposalAmendment.find(params[:proposal_amendment_id])
-    proposal_amendment.text = params['proposal_amendment']['text']
-    proposal_amendment.status = params['proposal_amendment']['status']
+    proposal_amendment.text = params['amendment']['text']
+    proposal_amendment.status = params['amendment']['status']
     proposal_amendment.save!
 
     if proposal_amendment
