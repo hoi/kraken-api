@@ -6,7 +6,7 @@ class TeamActionsController < ApplicationController
       render json: { status: 404 } and return
     end
 
-    team_action = TeamAction.create!(action: params['action']['action'],
+    team_action = TeamAction.create!(action: params['action']['type'],
                               team: team)
 
     if team_action
@@ -47,7 +47,7 @@ class TeamActionsController < ApplicationController
 
   def edit
     team_action = TeamAction.find(params[:team_action_id])
-    team_action.action = params['action']['action']
+    team_action.action = params['action']['type']
     team_action.save!
 
     if team_action
