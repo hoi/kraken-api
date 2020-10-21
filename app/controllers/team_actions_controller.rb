@@ -7,6 +7,8 @@ class TeamActionsController < ApplicationController
     end
 
     team_action = TeamAction.create!(action: params['action']['type'],
+                                     title: params['action']['title'],
+                                     description: params['action']['description'],
                               team: team)
 
     if team_action
@@ -48,6 +50,8 @@ class TeamActionsController < ApplicationController
   def edit
     team_action = TeamAction.find(params[:team_action_id])
     team_action.action = params['action']['type']
+    team_action.title = params['action']['title']
+    team_action.description = params['action']['description']
     team_action.save!
 
     if team_action
