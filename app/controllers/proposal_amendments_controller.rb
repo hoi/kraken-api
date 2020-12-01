@@ -70,4 +70,5 @@ class ProposalAmendmentsController < ApplicationController
     render json: {
         status: :deleted
     }
+  end
 end

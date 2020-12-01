@@ -52,7 +52,7 @@ class TeamsController < ApplicationController
     team = Team.find(params[:team_id])
     team.name = params['team']['name']
     team.description = params['team']['description']
-    team.thumbnail = params['thumbnail']['thumbnail']
+    team.thumbnail = params['team']['thumbnail']
     team.save!
 
     team_users = TeamUser.where(team: team)
