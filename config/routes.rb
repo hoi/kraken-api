@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'proposals/:proposal_id/amendments', to: 'proposal_amendments#index'
   get 'proposals/:proposal_id/amendments/:amendment_id', to: 'proposal_amendments#show'
   put 'proposals/:proposal_id/amendments/:amendment_id', to: 'proposal_amendments#edit'
+  delete 'proposals/:proposal_id/amendments/:amendment_id', to: 'proposal_amendments#delete'
 
   post 'proposals', to: 'proposals#create'
   get 'proposals', to: 'proposals#index'

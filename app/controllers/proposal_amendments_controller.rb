@@ -62,4 +62,12 @@ class ProposalAmendmentsController < ApplicationController
       render json: { status: 500 }
     end
   end
+
+  def delete
+    proposal_amendment = ProposalAmendment.find(params[:amendment_id])
+    proposal_amendment.destroy!
+
+    render json: {
+        status: :deleted
+    }
 end
