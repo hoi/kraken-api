@@ -35,7 +35,8 @@ class TeamActionsController < ApplicationController
   end
 
   def show
-    team_action = TeamAction.find(params[:team_action_id])
+    # team_action = TeamAction.find(params[:team_action_id])
+    team_action = TeamAction.find(params[:action_id])
 
     if team_action
       render json: {
