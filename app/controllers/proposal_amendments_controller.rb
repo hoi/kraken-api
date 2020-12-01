@@ -35,7 +35,7 @@ class ProposalAmendmentsController < ApplicationController
   end
 
   def show
-    proposal_amendment = ProposalAmendment.find(params[:proposal_amendment_id])
+    proposal_amendment = ProposalAmendment.find(params[:amendment_id])
 
     if proposal_amendment
       render json: {
@@ -48,7 +48,7 @@ class ProposalAmendmentsController < ApplicationController
   end
 
   def edit
-    proposal_amendment = ProposalAmendment.find(params[:proposal_amendment_id])
+    proposal_amendment = ProposalAmendment.find(params[:amendment_id])
     proposal_amendment.text = params['amendment']['text']
     proposal_amendment.status = params['amendment']['status']
     proposal_amendment.save!
