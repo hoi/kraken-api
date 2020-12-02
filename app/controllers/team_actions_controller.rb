@@ -35,7 +35,6 @@ class TeamActionsController < ApplicationController
   end
 
   def show
-    # team_action = TeamAction.find(params[:team_action_id])
     team_action = TeamAction.find(params[:action_id])
 
     if team_action
@@ -49,7 +48,7 @@ class TeamActionsController < ApplicationController
   end
 
   def edit
-    team_action = TeamAction.find(params[:team_action_id])
+    team_action = TeamAction.find(params[:action_id])
     team_action.action = params['action']['type']
     team_action.title = params['action']['title']
     team_action.description = params['action']['description']
@@ -66,7 +65,7 @@ class TeamActionsController < ApplicationController
   end
 
   def delete
-    team_action = TeamAction.find(params[:team_action_id])
+    team_action = TeamAction.find(params[:action_id])
     team_action.destroy!
 
     render json: {
