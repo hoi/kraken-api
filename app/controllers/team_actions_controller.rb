@@ -6,9 +6,9 @@ class TeamActionsController < ApplicationController
       render json: { status: 404 } and return
     end
 
-    team_action = TeamAction.create!(action: params['action']['type'],
-                                     title: params['action']['title'],
-                                     description: params['action']['description'],
+    team_action = TeamAction.create!(action: params['team_action']['type'],
+                                     title: params['team_action']['title'],
+                                     description: params['team_action']['description'],
                               team: team)
 
     if team_action
@@ -49,9 +49,9 @@ class TeamActionsController < ApplicationController
 
   def edit
     team_action = TeamAction.find(params[:action_id])
-    team_action.action = params['action']['type']
-    team_action.title = params['action']['title']
-    team_action.description = params['action']['description']
+    team_action.action = params['team_action']['type']
+    team_action.title = params['team_action']['title']
+    team_action.description = params['team_action']['description']
     team_action.save!
 
     if team_action
