@@ -49,7 +49,7 @@ class TeamUsersController < ApplicationController
     team_user = TeamUser.find_by(team: team, user_id: params[:user_id])
 
     if team_user.present?
-      team_user.delete!
+      team_user.delete
     end
 
     team_users = TeamUser.where(team: team)
