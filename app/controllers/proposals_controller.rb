@@ -2,6 +2,7 @@ class ProposalsController < ApplicationController
   def create
     proposal = Proposal.create!(title: params['proposal']['title'],
                                 body: params['proposal']['body'],
+                                vote_type: params['proposal']['vote_type'],
                                 user: @current_user)
 
     if proposal
@@ -54,6 +55,7 @@ class ProposalsController < ApplicationController
     proposal = Proposal.find(params[:proposal_id])
     proposal.title = params['proposal']['title']
     proposal.body = params['proposal']['body']
+    proposal.vote_type = params['proposal']['vote_type']
     proposal.save!
 
     if proposal

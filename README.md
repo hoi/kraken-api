@@ -4,10 +4,10 @@
 POST https://kraken-api.herokuapp.com/registration with load: {"user": {"name": "Kyle", "password": "12345678"}}
 POST https://kraken-api.herokuapp.com/authenticate with load: {"user": {"name": "Kyle", "password": "12345678"}}
 
-POST https://kraken-api.herokuapp.com/proposals with load: {"proposal": {"title": "Sample Proposal", "body": "Some description here."}}
+POST https://kraken-api.herokuapp.com/proposals with load: {"proposal": {"title": "Sample Proposal", "body": "Some description here.", "vote_type": "proposal"}}
 GET https://kraken-api.herokuapp.com/proposals
 GET https://kraken-api.herokuapp.com/proposals/1
-PUT  https://kraken-api.herokuapp.com/proposals/1 with load: {"proposal": {"title": "Sample Proposal Edited", "body": "Some edited description here."}}
+PUT  https://kraken-api.herokuapp.com/proposals/1 with load: {"proposal": {"title": "Sample Proposal Edited", "body": "Some edited description here.", "vote_type": "proposal"}}
 DELETE https://kraken-api.herokuapp.com/proposals/1
 POST https://kraken-api.herokuapp.com/proposals/1/comments with load: {"comment": {"body": "Some comment here."}}
 GET https://kraken-api.herokuapp.com/proposals/1/comments
